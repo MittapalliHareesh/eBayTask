@@ -14,6 +14,7 @@ import com.adevinta.ebay.R
 import com.adevinta.ebay.adapter.ImageGalleryAdapter
 import com.adevinta.ebay.databinding.ImageGalleryFragmentBinding
 import com.adevinta.ebay.model.ImageItem
+import com.adevinta.ebay.util.InternetConnection
 import com.adevinta.ebay.util.Status
 import com.adevinta.ebay.viewModel.ImageGalleryViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,8 +34,18 @@ class ImageGalleryFragment : Fragment() {
             ImageGalleryFragmentBinding.inflate(inflater, container, false)
         activity?.toolbar?.title = getString(R.string.app_name)
         imageGalleryFragmentBinding.imageGalleryViewModel = imageGalleryViewModel
-        populateImages()
+        loadImages()
         return imageGalleryFragmentBinding.root
+    }
+
+    private fun loadImages() {
+        if (InternetConnection.checkNetworkConnection(requireContext())) {
+            populateImages()
+        } else {
+            imageGalleryFragmentBinding.progressBar.visibility = View.GONE
+            Toast.makeText(requireContext(), getString(R.string.noInternet), Toast.LENGTH_LONG)
+                .show()
+        }
     }
 
     private fun populateImages() {

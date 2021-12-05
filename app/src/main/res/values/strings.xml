@@ -6,4 +6,5 @@
     <string name="productImage_fragment_label">Product Image Fragment</string>
     <string name="detail">Detail</string>
     <string name="selectedImage">selectedImage</string>
+    <string name="noInternet">Couldn\'t able to load data due to Connection lost.\n\nPlease check Network Settings.</string>
 </resources>
