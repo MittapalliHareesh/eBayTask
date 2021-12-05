@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/ImageGalleryFragment">
+
+    <fragment
+        android:id="@+id/ImageGalleryFragment"
+        android:name="com.adevinta.ebay.view.ImageGalleryFragment"
+        android:label="@string/image_gallery_fragment_label"
+        tools:layout="@layout/image_gallery_fragment">
+
+        <action
+            android:id="@+id/action_MainFragment_to_ProductImageFragment"
+            app:destination="@id/ProductImageFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ProductImageFragment"
+        android:name="com.adevinta.ebay.view.ProductImageFragment"
+        android:label="@string/productImage_fragment_label"
+        tools:layout="@layout/product_image_fragment">
+    </fragment>
+</navigation>

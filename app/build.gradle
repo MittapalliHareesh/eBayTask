@@ -1,0 +1,93 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    compileSdk versions.compilesdk
+
+    defaultConfig {
+        applicationId "com.adevinta.ebay"
+        minSdk versions.minsdk
+        targetSdk versions.targetsdk
+        versionCode versions.versionCode
+        versionName versions.versionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility versions.sourceCompatibility
+        targetCompatibility versions.targetCompatibility
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        dataBinding true
+    }
+    packagingOptions {
+        exclude 'META-INF/*.kotlin_module'
+        exclude 'META-INF/DEPENDENCIES'
+    }
+}
+
+dependencies {
+
+    //  Kotlin
+    implementation builddeps.kotlin_stdlibs.stdlib
+    implementation builddeps.kotlin_stdlibs.stdlib_jdk7
+    implementation builddeps.kotlin_stdlibs.reflect
+
+    // Core
+    implementation builddeps.androidx.core_ktx
+    implementation builddeps.androidx.appcompat
+    implementation builddeps.androidx.activity_version
+
+    // UI
+    implementation builddeps.material
+    implementation builddeps.androidx.constraintlayout
+
+    //  Lifecycle Components
+    implementation builddeps.androidx.livedata
+    implementation builddeps.androidx.viewModelKtx
+
+    // Navigation
+    implementation builddeps.androidx.navigation_fragment
+    implementation builddeps.androidx.navigation_ui_ktx
+
+    // Hilt DI
+    implementation builddeps.daggerhilt
+    kapt builddeps.daggercompiler
+    kapt builddeps.hilt_androidx
+
+
+    // Todo If issue add Coroutines deps here
+
+    // Retrofit
+    implementation retrofit.retrofitVersion
+    implementation retrofit.retofitConverterGson
+    implementation retrofit.httplogging_version
+    implementation retrofit.json_version
+
+    // Glide
+    implementation builddeps.glide
+    kapt builddeps.glideCompiler
+
+    //To define Density Independent pixels or Scale Independent pixels we use this library.
+    implementation builddeps.intuit_ssp
+    implementation builddeps.intuit_sdp
+
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}

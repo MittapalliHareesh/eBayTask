@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">eBay App</string>
+    <string name="action_settings">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="image_gallery_fragment_label">Image Gallery Fragment</string>
+    <string name="productImage_fragment_label">Product Image Fragment</string>
+    <string name="detail">Detail</string>
+    <string name="selectedImage">selectedImage</string>
+</resources>

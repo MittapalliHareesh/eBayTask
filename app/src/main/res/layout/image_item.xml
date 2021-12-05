@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_8sdp"
+        android:onClick="@{() -> clickListener.onImageClick(imageItem)}">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/itemImage"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
+            android:layout_gravity="center"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:productsImage="@{imageItem}"
+            tools:src="@drawable/ic_launcher_background" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <data>
+
+        <variable
+            name="clickListener"
+            type="com.adevinta.ebay.adapter.ImageGalleryAdapter.OnImageClickListener" />
+
+        <variable
+            name="imageItem"
+            type="com.adevinta.ebay.model.ImageItem" />
+
+    </data>
+</layout>
