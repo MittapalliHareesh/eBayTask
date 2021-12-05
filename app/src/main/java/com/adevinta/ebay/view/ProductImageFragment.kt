@@ -30,6 +30,7 @@ class ProductImageFragment : Fragment() {
 
         Glide.with(requireContext())
             .load(AppConstants.https + url + AppConstants.largeImageSize)
+            .dontTransform()
             .into(productImageFragmentBinding.largerImg)
 
         return productImageFragmentBinding.root

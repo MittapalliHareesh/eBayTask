@@ -1,10 +1,9 @@
 package com.adevinta.ebay.viewModel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.adevinta.ebay.model.ImageItem
+import androidx.lifecycle.liveData
 import com.adevinta.ebay.repository.ImageGalleryRepository
+import com.adevinta.ebay.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -13,17 +12,17 @@ import javax.inject.Inject
 class ImageGalleryViewModel @Inject constructor(private val repository: ImageGalleryRepository) :
     ViewModel() {
 
-    private val _imagesLiveData = MutableLiveData<List<ImageItem>>()
-    val imagesLiveData: MutableLiveData<List<ImageItem>>
-        get() = _imagesLiveData
-
-    init {
-        loadImages()
-    }
-
-    private fun loadImages() {
-        viewModelScope.launch {
-            imagesLiveData.value = repository.getImages().images
+    fun getImages() = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = repository.getImages().images))
+        } catch (exception: Exception) {
+            emit(
+                Resource.error(
+                    data = null,
+                    message = exception.message ?: "Error Occurred while fetching data!"
+                )
+            )
         }
     }
 }

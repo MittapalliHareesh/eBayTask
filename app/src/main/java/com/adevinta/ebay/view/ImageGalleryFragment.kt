@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.ListAdapter
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -13,6 +14,7 @@ import com.adevinta.ebay.R
 import com.adevinta.ebay.adapter.ImageGalleryAdapter
 import com.adevinta.ebay.databinding.ImageGalleryFragmentBinding
 import com.adevinta.ebay.model.ImageItem
+import com.adevinta.ebay.util.Status
 import com.adevinta.ebay.viewModel.ImageGalleryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
@@ -36,7 +38,9 @@ class ImageGalleryFragment : Fragment() {
     }
 
     private fun populateImages() {
+
         val bundle = Bundle()
+
         imageGalleryFragmentBinding.rcvAppliance.apply {
             adapter = ImageGalleryAdapter(object : ImageGalleryAdapter.OnImageClickListener {
                 override fun onImageClick(imageItem: ImageItem) {
@@ -49,12 +53,30 @@ class ImageGalleryFragment : Fragment() {
             })
             layoutManager = GridLayoutManager(context, 2)
         }
-        imageGalleryViewModel.imagesLiveData.observe(viewLifecycleOwner, {
-            it?.let {
-                @Suppress("UNCHECKED_CAST")
-                (imageGalleryFragmentBinding.rcvAppliance.adapter as ListAdapter<*, *>).submitList(
-                    it as List<Nothing>?
-                )
+
+        imageGalleryViewModel.getImages().observe(viewLifecycleOwner, {
+            it?.let { resource ->
+                when (resource.status) {
+
+                    Status.SUCCESS -> {
+                        imageGalleryFragmentBinding.rcvAppliance.visibility = View.VISIBLE
+                        imageGalleryFragmentBinding.progressBar.visibility = View.GONE
+                        @Suppress("UNCHECKED_CAST")
+                        (imageGalleryFragmentBinding.rcvAppliance.adapter as ListAdapter<*, *>)
+                            .submitList(resource.data as List<Nothing>?)
+                    }
+
+                    Status.LOADING -> {
+                        imageGalleryFragmentBinding.rcvAppliance.visibility = View.GONE
+                        imageGalleryFragmentBinding.progressBar.visibility = View.VISIBLE
+                    }
+
+                    Status.ERROR -> {
+                        imageGalleryFragmentBinding.rcvAppliance.visibility = View.VISIBLE
+                        imageGalleryFragmentBinding.progressBar.visibility = View.GONE
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                    }
+                }
             }
         })
     }
