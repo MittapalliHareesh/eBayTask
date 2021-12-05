@@ -6,6 +6,8 @@ import com.adevinta.ebay.repository.ImageGalleryRepository
 import com.adevinta.ebay.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import retrofit2.HttpException
+import java.lang.Exception
 import javax.inject.Inject
 
 /**
@@ -25,6 +27,13 @@ class ImageGalleryViewModel @Inject constructor(private val repository: ImageGal
         emit(Resource.loading(data = null))
         try {
             emit(Resource.success(data = repository.getImagesAPI().images))
+        } catch (httpException: HttpException) {
+            emit(
+                Resource.error(
+                    data = null,
+                    message = getErrorMessage(httpException.code())
+                )
+            )
         } catch (exception: Exception) {
             emit(
                 Resource.error(
@@ -32,6 +41,15 @@ class ImageGalleryViewModel @Inject constructor(private val repository: ImageGal
                     message = exception.message ?: "Error Occurred while fetching data!"
                 )
             )
+        }
+    }
+
+    private fun getErrorMessage(httpCode: Int): String {
+        return when (httpCode) {
+            401 -> "Accessing Unauthorised request"
+            404 -> "Not Found.\n\nPlease validate the requested URL."
+            500 -> "Server not found Error"
+            else -> "Something went wrong!!"
         }
     }
 }
