@@ -24,7 +24,7 @@ class ImageGalleryViewModel @Inject constructor(private val repository: ImageGal
     fun getImages() = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
-            emit(Resource.success(data = repository.getImages().images))
+            emit(Resource.success(data = repository.getImagesAPI().images))
         } catch (exception: Exception) {
             emit(
                 Resource.error(

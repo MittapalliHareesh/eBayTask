@@ -87,7 +87,28 @@ dependencies {
     implementation builddeps.intuit_ssp
     implementation builddeps.intuit_sdp
 
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    //Local Unit Tests
+    testImplementation testdeps.junit
+    testImplementation testdeps.androidXRunnerjunitkotlin
+    testImplementation testdeps.androidXCorekotlin
+    testImplementation testdeps.roboelectric
+    testImplementation testdeps.androidXcore
+    testImplementation testdeps.truth
+    testImplementation testdeps.hamcrest_all
+    testImplementation testdeps.mockito
+    testImplementation testdeps.mockito_inline
+    testImplementation testdeps.hilt_android_testing
+    testImplementation testdeps.coroutine_testing
+    //MockWebserver
+    testImplementation testdeps.mock_webserver
+
+    //Instrumented Unit Tests
+    androidTestImplementation testdeps.junit
+    androidTestImplementation testdeps.junit_androidx
+    androidTestImplementation testdeps.espresso
+    androidTestImplementation testdeps.truth
+    androidTestImplementation testdeps.mockito
+    androidTestImplementation testdeps.androidXcore
+    androidTestImplementation testdeps.hilt_android_testing
+    debugImplementation testdeps.fargmentx_testing
 }
