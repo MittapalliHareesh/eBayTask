@@ -7,6 +7,12 @@ import com.adevinta.ebay.model.ImageItem
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 
+/**
+ * It's an extension fun to AppCompatImageView to load images from URL.
+ *
+ * @param imageData is a model class it has image URL to load.
+ */
+
 @BindingAdapter("productsImage")
 fun AppCompatImageView.setDrawableImage(imageData: ImageItem) {
 

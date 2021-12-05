@@ -5,7 +5,9 @@ import android.net.ConnectivityManager
 
 object InternetConnection {
     /**
-     * CHECK WHETHER INTERNET CONNECTION IS AVAILABLE OR NOT
+     * It checks Whether Internet connection is available or not.
+     *
+     * @param context It indicates context of either Application or Activity/Fragment
      */
     @Suppress("DEPRECATION")
     fun checkNetworkConnection(context: Context): Boolean {

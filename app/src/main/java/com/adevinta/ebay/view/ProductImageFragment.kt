@@ -32,6 +32,11 @@ class ProductImageFragment : Fragment() {
         return productImageFragmentBinding.root
     }
 
+    /**
+     * This fun is for Network connectivity check.
+     * If it returns TRUE i.e connection is available then it will API and it will fetch data.
+     * Otherwise will throw network error message.
+     */
     private fun loadImage(url: String) {
         if (InternetConnection.checkNetworkConnection(requireContext())) {
             Glide.with(requireContext())

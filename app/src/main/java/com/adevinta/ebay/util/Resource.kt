@@ -1,5 +1,14 @@
 package com.adevinta.ebay.util
 
+
+/**
+ * It indicates whether API request is success or fail. Based on status API response data will be
+ * populated.
+ *
+ * @param status indicates state. Either it will be SUCCESS or ERROR or LOADING.
+ * @param data If API response was successfully using data field can fetch information.
+ * @param message In case of error response using message field we can fetch error message.
+ */
 data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
     companion object {
 

@@ -40,11 +40,21 @@ class ImageGalleryAdapter(private val listener: OnImageClickListener) :
 }
 
 class ImageDataDiffCallback : DiffUtil.ItemCallback<ImageItem>() {
-
+    /**
+     * This method will be called to check whether old and new items are the same.
+     * @param oldItem Indicates model class
+     * @param newItem Indicates model class
+     */
     override fun areItemsTheSame(oldItem: ImageItem, newItem: ImageItem): Boolean {
         return oldItem.uri == newItem.uri
     }
 
+    /**
+     * This method will be called to check whether old and new items represent the same item visually.
+     * This will only be called when areItemsTheSame() returns true.
+     * @param oldItem Indicates model class
+     * @param newItem Indicates model class
+     */
     override fun areContentsTheSame(oldItem: ImageItem, newItem: ImageItem): Boolean {
         return oldItem == newItem
     }
