@@ -10,9 +10,6 @@ buildscript {
         classpath builddeps.android_gradle_plugin
         classpath builddeps.kotlin
         classpath builddeps.hilt
-
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 

@@ -1,7 +1,6 @@
-package com.adevinta.ebay
+package com.adevinta.ebay.api
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.adevinta.ebay.api.ApiService
 import com.adevinta.ebay.repository.ImageGalleryRepository
 import com.adevinta.ebay.util.MockResponseFileReader
 import com.google.gson.GsonBuilder

@@ -43,6 +43,7 @@ class ProductImageFragment : Fragment() {
                 .load(AppConstants.https + url + AppConstants.largeImageSize)
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .dontTransform()
+                .placeholder(android.R.drawable.ic_menu_gallery)
                 .into(productImageFragmentBinding.largerImg)
         } else {
             Toast.makeText(requireContext(), getString(R.string.noInternet), Toast.LENGTH_LONG)
