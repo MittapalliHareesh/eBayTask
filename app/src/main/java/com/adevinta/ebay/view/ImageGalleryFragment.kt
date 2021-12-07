@@ -15,6 +15,7 @@ import com.adevinta.ebay.adapter.ImageGalleryAdapter
 import com.adevinta.ebay.databinding.ImageGalleryFragmentBinding
 import com.adevinta.ebay.model.ImageItem
 import com.adevinta.ebay.util.InternetConnection
+import com.adevinta.ebay.util.Resource
 import com.adevinta.ebay.util.Status
 import com.adevinta.ebay.viewModel.ImageGalleryViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,9 +55,7 @@ class ImageGalleryFragment : Fragment() {
     }
 
     private fun populateImages() {
-
         val bundle = Bundle()
-
         imageGalleryFragmentBinding.rcvAppliance.apply {
             adapter = ImageGalleryAdapter(object : ImageGalleryAdapter.OnImageClickListener {
                 override fun onImageClick(imageItem: ImageItem) {
@@ -69,31 +68,33 @@ class ImageGalleryFragment : Fragment() {
             })
             layoutManager = GridLayoutManager(context, 2)
         }
-
         imageGalleryViewModel.getImages().observe(viewLifecycleOwner, {
             it?.let { resource ->
-                when (resource.status) {
-
-                    Status.SUCCESS -> {
-                        imageGalleryFragmentBinding.rcvAppliance.visibility = View.VISIBLE
-                        imageGalleryFragmentBinding.progressBar.visibility = View.GONE
-                        @Suppress("UNCHECKED_CAST")
-                        (imageGalleryFragmentBinding.rcvAppliance.adapter as ListAdapter<*, *>)
-                            .submitList(resource.data as List<Nothing>?)
-                    }
-
-                    Status.LOADING -> {
-                        imageGalleryFragmentBinding.rcvAppliance.visibility = View.GONE
-                        imageGalleryFragmentBinding.progressBar.visibility = View.VISIBLE
-                    }
-
-                    Status.ERROR -> {
-                        imageGalleryFragmentBinding.rcvAppliance.visibility = View.VISIBLE
-                        imageGalleryFragmentBinding.progressBar.visibility = View.GONE
-                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
-                    }
-                }
+                renderUiState(resource)
             }
         })
+    }
+
+    private fun renderUiState(resource: Resource<List<ImageItem>>) {
+        when (resource.status) {
+            Status.SUCCESS -> {
+                imageGalleryFragmentBinding.rcvAppliance.visibility = View.VISIBLE
+                imageGalleryFragmentBinding.progressBar.visibility = View.GONE
+                @Suppress("UNCHECKED_CAST")
+                (imageGalleryFragmentBinding.rcvAppliance.adapter as ListAdapter<*, *>)
+                    .submitList(resource.data as List<Nothing>?)
+            }
+
+            Status.LOADING -> {
+                imageGalleryFragmentBinding.rcvAppliance.visibility = View.GONE
+                imageGalleryFragmentBinding.progressBar.visibility = View.VISIBLE
+            }
+
+            Status.ERROR -> {
+                imageGalleryFragmentBinding.rcvAppliance.visibility = View.VISIBLE
+                imageGalleryFragmentBinding.progressBar.visibility = View.GONE
+                Toast.makeText(requireContext(), resource.message, Toast.LENGTH_LONG).show()
+            }
+        }
     }
 }
