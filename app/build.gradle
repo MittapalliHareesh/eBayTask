@@ -103,6 +103,5 @@ dependencies {
     androidTestImplementation testdeps.mockito
     androidTestImplementation testdeps.androidXcore
     androidTestImplementation testdeps.hilt_android_testing
-    androidTestImplementation testdeps.mockk
     debugImplementation testdeps.fargmentx_testing
 }
